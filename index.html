@@ -1,1 +1,107 @@
-<html>おおい</html>
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タイマー</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="s-count.css">
+</head>
+<body  onload="onloadf()">
+    <div class="menu_overlay" onclick="CloseMenu()"></div>
+    <div class="menu_left">
+        <h1>ライセンス</h1>
+        <ul>
+            <li>製作者：3206</li>
+        </ul>
+    </div>
+    <header class="header">
+        <button class="mbt">
+            <span class="material-symbols-outlined" onclick="ToggleMenu()">
+                menu
+            </span>
+        </button>
+        <h3 class="title">
+        </h3>
+    </header>
+    <main class="main">
+        <div>
+            <h1 class="limit">
+                <!--あと-->
+                <span id="day">0</span>日
+                <span id="date">0</span>時間
+                <span id="min">0</span>分
+                <span id="sec">0</span>秒
+                <!--<span id="day">0</span>
+                <span id="date">0</span>
+                <span id="min">0</span>
+                <span id="sec">0</span>-->
+            </h1>
+        </div>
+    </main>
+</body>
+<script>
+
+    function ToggleMenu() {
+        document.getElementsByClassName("menu_overlay")[0].classList.toggle("menu_overlay_open")
+        document.getElementsByClassName("menu_left")[0].classList.toggle("menu_left_open")
+    }
+
+    function CloseMenu() {
+        document.getElementsByClassName("menu_overlay")[0].classList.remove("menu_overlay_open")
+        document.getElementsByClassName("menu_left")[0].classList.remove("menu_left_open")
+    }
+
+    function onloadf() {
+        SetDate();
+        document.getElementsByClassName("limit")[0].classList.add("limit_v")
+    }
+
+    function SetDate() {
+
+        var TripDate = new Date(2022, 6, 19, 7, 00);   
+
+        var NowDate = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
+        //var NowDate = new Date(2022, 6, 3, 1, 00, 0);
+
+        
+        /*console.log(
+            (TripDate.getDate() - NowDate.getDate()) 
+            + "日" + 
+            (TripDate.getHours() - NowDate.getHours() + 24) 
+            + "時間" + 
+            (TripDate.getMinutes() - NowDate.getMinutes() + 60)
+            + "分" + 
+            (TripDate.getSeconds() - NowDate.getSeconds() + 60)
+            + "秒"
+        );*/
+
+        document.getElementById("day").innerText = (TripDate.getDate() - NowDate.getDate())
+
+        /* 残り時間が-の場合の処理*/
+        if ((TripDate.getHours() - NowDate.getHours()).toString()[0] == "-") {
+            document.getElementById("date").innerText = (TripDate.getHours() - NowDate.getHours() + 24)
+        } else {
+            document.getElementById("date").innerText = (TripDate.getHours() - NowDate.getHours() /*+ 23*/)
+        }
+
+        if ((TripDate.getMinutes() - NowDate.getMinutes() + 59).toString().length == 1) {
+            document.getElementById("min").innerText =  "0" + (TripDate.getMinutes() - NowDate.getMinutes() + 59)
+        } else {
+            document.getElementById("min").innerText =  (TripDate.getMinutes() - NowDate.getMinutes() + 59)
+        }
+
+        if ((TripDate.getSeconds() - NowDate.getSeconds() + 59).toString().length == 1) {
+            document.getElementById("sec").innerText = "0" + (TripDate.getSeconds() - NowDate.getSeconds() + 59)
+        } else {
+            document.getElementById("sec").innerText = (TripDate.getSeconds() - NowDate.getSeconds() + 59)
+        }
+        
+        
+    }
+
+    setInterval(SetDate, 500);
+
+</script>
+</html>
